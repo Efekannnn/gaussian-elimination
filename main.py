@@ -25,7 +25,7 @@ def swap_rows(M, r_index1, r_index2):
     return M
 
 
-def get_index_f_nonzero(M, column, start_row):
+def get_index_f_non_zero_column(M, column, start_row):
     """
     Retrieve the index of the first non-zero value in a specified column of the given matrix.
 
@@ -58,4 +58,45 @@ def get_index_f_nonzero(M, column, start_row):
             index = i + start_row
             return index
 
+    return -1
+
+
+def get_index_f_non_zero_row(M, row, augmented=False):
+    """
+    Find the index of the first non-zero value in the specified row of the given matrix.
+
+    Parameters:
+    - matrix (numpy.array): The input matrix to search for non-zero values.
+    - row (int): The index of the row to search.
+    - augmented (bool): Pass this True if you are dealing with an augmented matrix,
+                        so it will ignore the constant values (the last column in the augmented matrix).
+
+    Returns:
+    int: The index of the first non-zero value in the specified row.
+         Returns -1 if no non-zero value is found.
+
+    --Turkish version of docstring--
+
+    Verilen matristeki belirtilen satırın ilk sıfır olmayan değerinin dizinini bulun.
+
+    Parametreler:
+    - matrix (numpy.array): Sıfır olmayan değerleri aramak için girdi matrisi.
+    - row (int): Aranacak satırın dizini.
+    - augmented (bool): Artırılmış bir matrisle uğraşıyorsanız True olarak geçirin,
+                        böylece sabit değerleri (artırılmış matrisin son sütunu) yoksayar.
+
+    Dönüşler:
+    int: Belirtilen satırdaki ilk sıfır olmayan değerin dizini.
+         Eğer hiç sıfır olmayan değer bulunamazsa -1 döner.
+    """
+
+    M = M.copy()
+
+    if augmented == True:
+        M = M[:, :-1]
+
+    row_array = M[row]
+    for i, value in enumerate(row_array):
+        if not np.isclose(value, 0, atol=1e-5):
+            return i
     return -1
